@@ -1,0 +1,19 @@
+# npm
+/node_modules
+npm-debug.log
+
+# build
+/dist
+/app/build
+
+# eslint
+.eslintcache
+
+# VS Code
+/.vscode
+
+# OS X
+.DS_Store
+
+# Config
+.env.*
