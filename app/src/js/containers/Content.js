@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: data => dispatch(createUser(data)),
+  onSubmit: () => dispatch(createUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withImmutablePropsToJS(Content));

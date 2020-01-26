@@ -4,8 +4,8 @@ import { Field } from 'redux-form/immutable';
 import Button from '@material-ui/core/Button';
 import ReduxTextField from './shared/ReduxTextField';
 
-const Form = ({ classes, handleSubmit, pristine, invalid }) => (
-  <form onSubmit={handleSubmit} className={classes.form}>
+const Form = ({ classes, pristine, invalid, onSubmit }) => (
+  <form onSubmit={e => { e.preventDefault(); onSubmit(); }} className={classes.form}>
     <Field name="firstName" label="Ім'я*"
       component={ReduxTextField}
       fullWidth variant="outlined" margin="normal"/>

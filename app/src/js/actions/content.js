@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 import { getEditorMode } from '../selectors/content';
 import { modifyLdapUser, createLdapUser } from '../configs/ldap';
+import { getEditorFormValues } from '../selectors/form';
 
 export const EDITOR_MODES = {
   INITIAL: 'INITIAL',
@@ -44,9 +45,11 @@ export const setCredentials = createAction(SET_CREDENTIALS);
 
 const generateSubmitErrorMessage = e => `${SUBMIT_STATUSES.FAILURE}: ${e.stack.substring(0, 50)}`;
 
-export const createUser = data =>
+export const createUser = () =>
   (dispatch, getState) => {
-    const editorMode = getEditorMode(getState());
+    const state = getState();
+    const editorMode = getEditorMode(state);
+    const data = getEditorFormValues(state);
     const userData = data.toJS();
     if (editorMode === EDITOR_MODES.EDIT) {
       modifyLdapUser(userData)

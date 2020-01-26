@@ -104,8 +104,10 @@ const asyncValidate = (values, dispatch) => {
 
 }
 
+export const editorFormName = 'LdapUserEditorForm';
+
 export default reduxForm({
-  form: 'LdapUserEditorForm',
+  form: editorFormName,
   validate: validateForm(fields),
   asyncValidate,
   enableReinitialize: true,
