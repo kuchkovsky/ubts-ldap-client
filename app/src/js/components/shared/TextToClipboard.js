@@ -48,7 +48,7 @@ const TextToClipboard = ({ classes, text }) => {
 
 TextToClipboard.propTypes = {
   classes: PropTypes.object.isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
 };
 
 export default withStyles(styles)(TextToClipboard);

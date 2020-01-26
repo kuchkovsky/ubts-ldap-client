@@ -19,7 +19,7 @@ export const extractGroup = dn => {
   return withoutCn.substring(withoutCn.indexOf('OU=') + 3, withoutCn.indexOf(','));
 };
 
-export const createCn = user => `${user.lastName} ${user.firstName} ${user.middleName}`
+export const createCn = user => `${user.lastName} ${user.firstName} ${user.middleName ? user.middleName : ''}`
 export const createDn = user =>
   `CN=${createCn(user)},OU=${user.group},${process.env.STUDENTS_DN},${process.env.BASE_DN}`;
 
@@ -42,35 +42,34 @@ export const fetchUsers = (lastName = undefined, firstName = undefined, patronym
   });
 };
 
+const createReplace = modification => new ldap.Change({ operation: 'replace', modification });
+const createDelete = modification => new ldap.Change({ operation: 'delete', modification });
+
 export const modifyLdapUser = user => {
   return new Promise(async (resolve, reject) => {
-    const changes = [
-      new ldap.Change({
-        operation: 'replace',
-        modification: {
-          mail: user.email
-        }
-      }),
-      new ldap.Change({
-        operation: 'replace',
-        modification: {
-          telephoneNumber: user.phone
-        }
-      }),
-      new ldap.Change({
-        operation: 'replace',
-        modification: {
-          birthdate: user.birthdate
-        }
-      })
-    ];
+    const changes = [ createReplace({ mail: user.email }) ];
+    if (user.phone) {
+      changes.push(createReplace({ telephoneNumber: user.phone }));
+    }
+    if (user.birthdate) {
+      changes.push(createReplace({ birthdate: user.birthdate }));
+    }
+    
     const generatedDn = createDn(user);
     try {
       const res = await fetchUsers(user.lastName, user.firstName, user.middleName);
-      const oldDn = res[0].dn;
+      const fetchedUser = res[0];
+
+      if (!user.phone && fetchedUser.telephoneNumber) {
+        changes.push(createDelete({ telephoneNumber: [] }));
+      }
+      if (!user.birthdate && fetchedUser.birthdate) {
+        changes.push(createDelete({ birthdate: [] }));
+      }
+
       const modify = () => client.modify(generatedDn, changes, err => err ? reject(err) : resolve());
-      if (res[0].dn != generatedDn) {
-        client.modifyDN(oldDn, generatedDn, err => err ? reject(err) : modify());
+      if (fetchedUser.dn != generatedDn) {
+        client.modifyDN(fetchedUser.dn, generatedDn, err => err ? reject(err) : modify());
       } else {
         modify();
       }
@@ -88,15 +87,21 @@ export const createLdapUser = user => {
       cn: createCn(user),
       givenName: user.firstName,
       sn: user.lastName,
-      patronymic: user.middleName,
       mail: user.email,
-      telephoneNumber: user.phone,
-      birthdate: user.birthdate,
       sAMAccountName: userName,
       userPrincipalName: user.email,
       userPassword,
       objectClass: ['organizationalPerson', 'person', 'top', 'user']
     };
+    if (user.middleName) {
+      entry.patronymic = user.middleName;
+    }
+    if (user.phone) {
+      entry.telephoneNumber = user.phone;
+    }
+    if (user.birthdate) {
+      entry.birthdate = user.birthdate;
+    }
     client.add(createDn(user), entry, err => err ? reject(err) : resolve({ login: userName, password: userPassword }));
   });
 };

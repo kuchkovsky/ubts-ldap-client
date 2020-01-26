@@ -46,8 +46,8 @@ const CredentialsContainer = props => (
 
 CredentialsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
-  login: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
+  login: PropTypes.string,
+  password: PropTypes.string,
 };
 
 export default withStyles(styles)(CredentialsContainer);
