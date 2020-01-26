@@ -38,7 +38,7 @@ export const fetchUsers = (lastName = undefined, firstName = undefined, patronym
       const entries = [];
       res.on('searchEntry', entry => entries.push(entry.object));
       res.on('end', () => resolve(entries));
-    })
+    });
   });
 };
 
