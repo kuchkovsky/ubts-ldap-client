@@ -7,7 +7,7 @@ import axios from 'axios';
 const client = ldap.createClient({
   url: process.env.LDAP_URL,
   tlsOptions: {
-    ca: [ fs.readFileSync('./ca.crt') ]
+    ca: [ fs.readFileSync('ca.crt') ]
   },
 });
 
@@ -24,7 +24,7 @@ export const extractGroup = dn => {
   return withoutCn.substring(withoutCn.indexOf('OU=') + 3, withoutCn.indexOf(','));
 };
 
-const createCn = user => `${user.lastName} ${user.firstName} ${user.middleName ? user.middleName : ''}`
+const createCn = user => `${user.lastName} ${user.firstName}${user.middleName ? ` ${user.middleName}` : ''}`
 
 const createDn = user =>
   `CN=${createCn(user)},OU=${user.group},${process.env.STUDENTS_DN},${process.env.BASE_DN}`;

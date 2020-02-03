@@ -1,6 +1,6 @@
 {
   "name": "ubts-ldap-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "UBTS LDAP Client",
   "main": "main.js",
   "scripts": {
