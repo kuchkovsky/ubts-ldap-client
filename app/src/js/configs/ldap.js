@@ -157,7 +157,8 @@ export const createLdapUser = user => {
     client.add(generatedDn, entry, async err => {
       if (err) return reject(err);
       const fetchedNewGroup = await fetchGroup(user.group);
-      const newMembers = fetchedNewGroup.member.slice(0);
+      const members = fetchedNewGroup.member;
+      const newMembers = members ? (Array.isArray(members) ? members.slice(0) : [ members ]) : [];
       newMembers.push(generatedDn);
       const newGroupChange = createReplace({ member: newMembers });
       client.modify(fetchedNewGroup.dn, newGroupChange, err => {
