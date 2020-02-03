@@ -21,7 +21,7 @@ const Form = ({ classes, pristine, invalid, onSubmit }) => (
     <Field name="email" label="E-mail*"
       component={ReduxTextField} type="email"
       fullWidth variant="outlined" margin="normal"/>
-    <Field name="phone" label="Номер телефону у форматі 380XXXXXXXXX"
+    <Field name="phone" label="Номер телефону у форматі XXXXXXXXXXXX"
       component={ReduxTextField}
       fullWidth variant="outlined" margin="normal"/>
     <Field name="birthdate" label="Дата народження у форматі YYYY-MM-DD"
