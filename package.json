@@ -31,7 +31,11 @@
     },
     "win": {
       "target": "nsis"
-    }
+    },
+    "extraFiles": [
+      ".env",
+      "ca.crt"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
