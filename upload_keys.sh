@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mc cp .env minio/main/ubts-ldap-client/
+mc cp .env ca.crt minio/main/ubts-ldap-client/

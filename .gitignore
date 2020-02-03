@@ -17,3 +17,6 @@ npm-debug.log
 
 # Config
 .env.*
+
+# Certificate
+ca.crt

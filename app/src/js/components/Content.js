@@ -25,10 +25,6 @@ const styles = {
   textHint: {
     marginTop: 6,
     marginRight: 5,
-  },
-  creds: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
   }
 };
 
@@ -50,7 +46,7 @@ const Content = props => {
         </Grid>
         {
           editorMode === EDITOR_MODES.INITIAL && submitStatusText === SUBMIT_STATUSES.SUCCESS &&
-            <CredentialsContainer className={classes.creds} login={credentials.login} password={credentials.password}/>
+            <CredentialsContainer login={credentials.login} password={credentials.password}/>
         }
       </Paper>
     </div>

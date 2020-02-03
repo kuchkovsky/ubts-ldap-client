@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import TextToClipboard from './shared/TextToClipboard';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -16,31 +15,10 @@ const styles = {
 };
 
 const CredentialsContainer = props => (
-  <Grid container spacing={2} justify="center" className={props.classes.root}>
-    <Grid item>
-      <Grid container>
-        <Grid item>
-          <Typography className={props.classes.textHint} variant="subtitle2">
-            Логін:
-          </Typography>
-        </Grid>
-        <Grid item>
-          <TextToClipboard text={props.login}/>
-        </Grid>
-      </Grid>
-    </Grid>
-    <Grid item>
-      <Grid container>
-        <Grid item>
-          <Typography className={props.classes.textHint} variant="subtitle2">
-            Пароль:
-          </Typography>
-        </Grid>
-        <Grid item>
-          <TextToClipboard text={props.password}/>
-        </Grid>
-      </Grid>
-    </Grid>
+  <Grid container justify="center" className={props.classes.root}>
+    <div>
+      <TextToClipboard text={`Логін: ${props.login} Пароль: ${props.password}`}/>
+    </div>
   </Grid>
 );
 
