@@ -1,13 +1,16 @@
+import electron from 'electron';
 import ldap from 'ldapjs';
 import fs from 'fs';
 import cyrillicToTranslit from 'cyrillic-to-translit-js';
 import { strongPassword } from '../utils/password';
 import axios from 'axios';
 
+const isDev = () => electron.remote.process.argv[2] == '--dev';
+
 const client = ldap.createClient({
   url: process.env.LDAP_URL,
   tlsOptions: {
-    ca: [ fs.readFileSync('ca.crt') ]
+    ca: [ fs.readFileSync(`${isDev() ? '' : `${process.resourcesPath}/`}ca.crt`) ]
   },
 });
 
