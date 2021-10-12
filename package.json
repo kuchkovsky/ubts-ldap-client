@@ -43,7 +43,7 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
-    "electron": "^8.2.5",
+    "electron": "^11.5.0",
     "electron-builder": "^22.6.0",
     "electron-devtools-installer": "^3.0.0",
     "file-loader": "^6.0.0",
